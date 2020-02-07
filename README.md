@@ -3,7 +3,7 @@ A simple script to change mac address using python
 
 ## Usage :
 install python3 : `sudo apt-get install python3` <br>
-run app :`sudo python3 mac_changer.py -i wlan0 -m 00:11:22:33:44:55`<br>
+run app :`sudo python3 mac_changer.py -i interface_name -m new_mac_address`<br>
 to see more :`python3 mac_changer.py -h`
 
 
