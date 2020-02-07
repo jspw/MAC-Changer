@@ -10,8 +10,8 @@ import optparse as op
 
 def get_arguments():
     parser = op.OptionParser();
-    parser.add_option("-i","--interface",dest="interface",help="Interface to change its mac address")
-    parser.add_option("-m","--mac",dest="new_mac",help="The new mac address")
+    parser.add_option("-i","--interface",dest="interface",help="Interface to change its MAC address")
+    parser.add_option("-m","--mac",dest="new_mac",help="The new MAC address")
     
     (options,arguments) = parser.parse_args()
 
@@ -23,19 +23,20 @@ def get_arguments():
 
 
 
-def change_mac(interface,new_mac):
+def change_mac(options):
+    interface, new_mac = options.interface, options.new_mac
     ifconfig = "/sbin/ifconfig"
     interface_down = [ifconfig , interface , "down"]
     interface_up = [ifconfig , interface , "up"]
     mac_change = [ifconfig, interface ,"hw","ether", new_mac]
 
-    print("[+] changing mac address for "+ interface+ " ......\n")
+    print("[+] changing MAC address for "+ interface+ " ......\n")
 
     sp.call(interface_down) 
     sp.call(mac_change) 
     sp.call(interface_up)
     
-    print("Mac address changed to " + new_mac)
+    print("MAC address changed to " + new_mac)
     
 
 def error_check():
@@ -64,4 +65,4 @@ def error_check():
 
 options = get_arguments()
 error_check()
-change_mac(options.interface,options.new_mac)
+change_mac(options)
