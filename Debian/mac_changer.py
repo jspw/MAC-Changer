@@ -2,25 +2,39 @@
 
 #program:mac address changer 
 #@Author : 5hifaT
-#github:www.github.com/mh-shifat
+#github:https://github.com/mh-shifat/MAC-Changer
 #Date:7 Feb, 2020
 #distro : Debian
 
 import subprocess as sp 
 import optparse as op
+import re
+
+def show_interfaces():
+    print("Displaying Available Network Interfaces :\n")
+    avl_if = sp.check_output("ls /sys/class/net",shell=True,universal_newlines=True)
+    print(avl_if)
+    
 
 def get_arguments():
     parser = op.OptionParser();
     parser.add_option("-i","--interface",dest="interface",help="Interface to change its MAC address")
     parser.add_option("-m","--mac",dest="new_mac",help="The new MAC address")
+    parser.add_option("-s","--show_interfaces",dest="show_interfaces",help="Use '-s show' to see the available interfaces")
     
     (options,arguments) = parser.parse_args()
 
-    if not options.interface :
-        parser.error("[-] please specify an interface , use --help for more info")
-    elif not options.new_mac :
-        parser.error("[-] please specify a MAC address , use --help for more info")
-    return options
+    if  options.show_interfaces == "show":
+        show_interfaces();
+        return False
+        
+    else :
+        if not options.interface :
+            parser.error("[-] please specify an interface\nor\nuse '-s show' to  see the available interfaces or use --help for more info")
+
+        elif not options.new_mac :
+            parser.error("[-] please specify a MAC address , use --help for more info")
+        return options
 
 
 def change_mac(interface,new_mac):
@@ -35,7 +49,13 @@ def change_mac(interface,new_mac):
     sp.call(mac_change) 
     sp.call(interface_up)
     
-    print("Mac address has changed to " + new_mac)
+    ifconfig_result = sp.check_output([ifconfig,interface],universal_newlines=True)
+    mac_search = re.search('\w\w:\w\w:\w\w:\w\w:\w\w:\w\w',ifconfig_result)
+    
+    if mac_search.group(0) == new_mac :
+        print("Mac address has changed to " + new_mac + " successfully")
+    else :
+        print("MAC address can't be chnaged, try again")
     
 
 def error_check():
@@ -53,8 +73,8 @@ def error_check():
         except OSError as err:
             print("Try  to install net-tools manually for your operating system")
             exit
-
-options = get_arguments()
-error_check()
-change_mac(options.interface,options.new_mac)
-
+            
+if(get_arguments()):
+    options = get_arguments()
+    error_check()
+    change_mac(options.interface,options.new_mac)
