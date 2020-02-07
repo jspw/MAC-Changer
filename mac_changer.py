@@ -38,5 +38,30 @@ def change_mac(interface,new_mac):
     print("Mac address changed to " + new_mac)
     
 
+def error_check():
+    ifconfig = "/sbin/ifconfig"
+    ifconfig_not_found = "bash: /sbin/ifconfig: No such file or directory"
+    
+    try:
+        sp.check_output(ifconfig)
+    except OSError as error:
+        # print(error)
+        print("Net-tools is not installed.\n\n")
+        print("[+] installing net-tools ....\n\n")
+        try:
+            sp.check_output("sudo apt-get install net-tools",shell=True)
+            print("net-tools installed successfully\n")
+        except OSError as err:
+            try:
+                sp.check_output("sudo pacman -S net-tools",shell=True)
+                print("net-tools installed successfully\n")
+            except OSError as e:
+                print(e)
+                print("Try  to install net-tools manually for your operating system")
+                exit
+    
+        
+
 options = get_arguments()
+error_check()
 change_mac(options.interface,options.new_mac)
