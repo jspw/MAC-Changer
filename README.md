@@ -1,10 +1,10 @@
 # MAC-Changer
-A simple script to change mac address using python
+A simple script to change mac address using python for debian 
 
 ## Usage :
-install python3 : `sudo apt-get install python3` <br>
 run app :`sudo python3 mac_changer.py -i interface_name -m new_mac_address`<br>
 to see more :`python3 mac_changer.py -h`
+
 
 
 ### Change MAC address menually in command line :<br>

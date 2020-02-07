@@ -4,6 +4,7 @@
 #@Author : 5hifaT
 #github:www.github.com/mh-shifat
 #Date:7 Feb, 2020
+#distro : Debian
 
 import subprocess as sp 
 import optparse as op
@@ -18,13 +19,11 @@ def get_arguments():
     if not options.interface :
         parser.error("[-] please specify an interface , use --help for more info")
     elif not options.new_mac :
-        parser.error("[-] please specify an mac address , use --help for more info")
+        parser.error("[-] please specify a MAC address , use --help for more info")
     return options
 
 
-
-def change_mac(options):
-    interface, new_mac = options.interface, options.new_mac
+def change_mac(interface,new_mac):
     ifconfig = "/sbin/ifconfig"
     interface_down = [ifconfig , interface , "down"]
     interface_up = [ifconfig , interface , "up"]
@@ -36,7 +35,7 @@ def change_mac(options):
     sp.call(mac_change) 
     sp.call(interface_up)
     
-    print("MAC address changed to " + new_mac)
+    print("Mac address has changed to " + new_mac)
     
 
 def error_check():
@@ -46,23 +45,16 @@ def error_check():
     try:
         sp.check_output(ifconfig)
     except OSError as error:
-        # print(error)
         print("Net-tools is not installed.\n\n")
-        print("[+] installing net-tools ....\n\n")
         try:
+            print("[+] installing net-tools ....\n\n")
             sp.check_output("sudo apt-get install net-tools",shell=True)
             print("net-tools installed successfully\n")
         except OSError as err:
-            try:
-                sp.check_output("sudo pacman -S net-tools",shell=True)
-                print("net-tools installed successfully\n")
-            except OSError as e:
-                print(e)
-                print("Try  to install net-tools manually for your operating system")
-                exit
-    
-        
+            print("Try  to install net-tools manually for your operating system")
+            exit
 
 options = get_arguments()
 error_check()
-change_mac(options)
+change_mac(options.interface,options.new_mac)
+
