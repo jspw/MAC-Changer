@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
 #program:mac address changer 
-#@Author : 5hifaT
-#github:https://github.com/mh-shifat/MAC-Changer
+#@Author : Mehedi Hasan Shifat
+#github:https://github.com/jspw/MAC-Changer
 #Date:7 Feb, 2020
-#distro : Debian
+#distro : CentOS
 
 import subprocess as sp 
 import optparse as op

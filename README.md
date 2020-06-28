@@ -1,16 +1,23 @@
 # MAC-Changer
-A simple script to change mac address using python for debian 
+A simple script written in python to change **MAC Address** for **Linux** based Operating Systems.
+
+- [Debian](/Debian/mac_changer.py)
+- [Arch](/Arch/mac_changer.py)
+- [CentOS](/CentOS/mac_changer.py)
+- [SUSE](/Suse/mac_changer.py)
 
 ## Usage :
-run app :`sudo python3 mac_changer.py -i interface_name -m new_mac_address`<br>
-to see more :`python3 mac_changer.py -h`
+- Show Network Interfaces :
+
+        sudo python  mac_changer.py -s show
+
+- Change MAC Address :
+
+        sudo python mac_changer.py -i interface_name -m new_mac_address
 
 
+- To see more :
 
-### Change MAC address menually in command line :<br>
-**Check interface :** `/sbin/ifconfig` <br>
-**eth0 down :** `/sbin/ifconfig eth0 down` <br>
-**Change address :** `/sbin/ifconfig eth0 hw ether 00:11:22:33:44:55` <br>
-**eth0 up :** `/sbin/ifconfig eth0 up` <br>
+        `python3 mac_changer.py -h`
 
-###### **for old distro use : `ifconfig` instade of `/sbin/ifconfig` <br>**
+    ![Help SS](/images/help.png)
