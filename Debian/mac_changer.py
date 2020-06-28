@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 
 #program:mac address changer 
-#@Author : 5hifaT
-#github:https://github.com/mh-shifat/MAC-Changer
+#@Author : Mehedi Hasan Shifat
+#github:https://github.com/jspw/MAC-Changer
 #Date:7 Feb, 2020
 #distro : Debian
 
@@ -25,7 +25,7 @@ def get_arguments():
     (options,arguments) = parser.parse_args()
 
     if  options.show_interfaces == "show":
-        show_interfaces();
+        show_interfaces()
         return False
         
     else :
@@ -78,3 +78,4 @@ if(get_arguments()):
     options = get_arguments()
     error_check()
     change_mac(options.interface,options.new_mac)
+
